@@ -113,7 +113,7 @@ function fhirPasienByNIK($params = array()) {
 	}
 	
 	if(!empty($params['output_type']) && $params['output_type'] == 'echo') {
-		echo json_encode($ret);
+		echo json_encode($ret, JSON_UNESCAPED_SLASHES);
 	}
 	else {
 		return $ret;
@@ -133,7 +133,7 @@ function fhirBundle($params) {
 			$isUp = @get_headers($urlWS, 1);
 			if ($isUp) {
 				$header = generateHeaderFHIR();
-				$payload = json_encode($params);
+				$payload = json_encode($params, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 				//  Initiate curl
 				$ch = curl_init();
 
@@ -181,7 +181,7 @@ echo "<h1>Response Data Pasien NIK $nik</h1>";
 echo '<pre>';
 print_r($data);
 echo '</pre>';
-
+exit;
 /*
 Seorang anak berusia 2 tahun dengan KIA 3171022809990001  pada tanggal 13 Agustus  2022 datang ke RS XXX ke poliklinik anak dengan dr.XXX Sp.A dengan NIK 367400001111223. Pasien mengeluhkan sering mencret setiap minum susu formula. Keluhan perdarahan dari dubur tidak ada. 
 Hasil pemeriksaan fisik 
@@ -736,7 +736,7 @@ $array_bundle = array(
 
 echo '<h1>JSON Bundle yang dikirim</h1>';
 echo '<pre>';
-echo json_encode($array_bundle, JSON_PRETTY_PRINT);
+echo json_encode($array_bundle, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
 echo '</pre>';
 
 echo '<h1>Response pengiriman Bundle</h1>';
